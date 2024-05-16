@@ -68,6 +68,7 @@ class DefaultSolution
         r_dual(solution.r_dual)
     {
     }
+    DefaultSolution():x(nullptr,0),z(nullptr,0),s(nullptr,0),status(SolverStatus::Unsolved),obj_val(0),obj_val_dual(0),solve_time(0),iterations(0),r_prim(0),r_dual(0){}//dangerous nullptr!
 };
 
 // Instantiate the templates
