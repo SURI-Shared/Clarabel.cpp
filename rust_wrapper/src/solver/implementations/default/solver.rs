@@ -165,6 +165,8 @@ pub enum ClarabelSolverStatus {
     ClarabelMaxTime,
     /// Solver terminated with a numerical error
     ClarabelNumericalError,
+    /// Solver terminated with a numerical error in scaling
+    ClarabelScalingError,
     /// Solver terminated due to lack of progress.
     ClarabelInsufficientProgress,
 }
@@ -188,6 +190,9 @@ impl From<&mut SolverStatus> for ClarabelSolverStatus {
             SolverStatus::NumericalError => ClarabelSolverStatus::ClarabelNumericalError,
             SolverStatus::InsufficientProgress => {
                 ClarabelSolverStatus::ClarabelInsufficientProgress
+            }
+            SolverStatus::ScalingError => {
+                ClarabelSolverStatus::ClarabelScalingError
             }
         }
     }
