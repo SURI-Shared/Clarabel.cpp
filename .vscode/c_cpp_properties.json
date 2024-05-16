@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/include/**",
-                "/usr/include/eigen3"
+                "/home/ggutow/miniconda3/envs/gobnilp/include/eigen3/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -4,10 +4,14 @@
         "${workspaceFolder}/rust_wrapper/Cargo.toml"
     ],
     "files.associations": {
+        "*.urdf": "xml",
         "**/include/c/*.h": "c",
         "stack": "cpp",
         "iosfwd": "cpp",
         "vector": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "eigen": "cpp",
+        "dense": "cpp",
+        "core": "cpp"
     }
 }
