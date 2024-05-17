@@ -19,6 +19,7 @@ enum class SolverStatus
     MaxIterations,
     MaxTime,
     NumericalError,
+    ScalingError,
     InsufficientProgress,
 };
 
