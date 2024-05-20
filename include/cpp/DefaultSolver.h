@@ -106,6 +106,7 @@ class DefaultSolver
 
     ~DefaultSolver();
     void solve();
+    void solve_warm(double* xguess, double* sguess, double* zguess);
 
     // The solution can only be obtained when the solver is in the Solved state, and the DefaultSolution object is only
     // valid when the solver is alive.
@@ -177,6 +178,7 @@ RustDefaultSolverHandle_f32 clarabel_DefaultSolver_f32_new(const CscMatrix<float
                                                            const DefaultSettings<float> *settings);
 
 void clarabel_DefaultSolver_f64_solve(RustDefaultSolverHandle_f64 solver);
+void clarabel_DefaultSolver_f64_solve_warm(RustDefaultSolverHandle_f64 solver,double*,double*,double*);
 
 void clarabel_DefaultSolver_f32_solve(RustDefaultSolverHandle_f32 solver);
 
@@ -281,6 +283,12 @@ template<>
 inline void DefaultSolver<double>::solve()
 {
     clarabel_DefaultSolver_f64_solve(handle);
+}
+
+template<>
+inline void DefaultSolver<double>::solve_warm(double* xguess, double* sguess, double* zguess)
+{
+    clarabel_DefaultSolver_f64_solve_warm(handle,xguess,sguess,zguess);
 }
 
 template<>

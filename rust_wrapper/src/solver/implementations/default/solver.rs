@@ -3,7 +3,9 @@ use crate::core::cones::ClarabelSupportedConeT;
 use crate::solver::implementations::default::settings::*;
 use crate::utils;
 use clarabel::algebra::FloatT;
-use clarabel::solver::{self as lib, IPSolver, SolverStatus};
+use clarabel::algebra::VectorMath;
+use clarabel::solver::traits::Variables;
+use clarabel::solver::{self as lib, DefaultVariables, IPSolver, SolverStatus};
 use std::slice;
 use std::{ffi::c_void, mem::forget};
 
@@ -110,6 +112,44 @@ fn _internal_DefaultSolver_solve<T: FloatT>(solver: *mut c_void) {
 
     // Leave the solver object on the heap
     Box::into_raw(solver);
+}
+
+// Wrapper function to call DefaultSolver.solve_warm() from C
+#[allow(non_snake_case)]
+unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xguess:*const T,sguess:*const T,zguess:*const T) {
+    debug_assert!(!xguess.is_null(), "Pointer xguess must not be null");
+    debug_assert!(!sguess.is_null(), "Pointer sguess must not be null");
+    debug_assert!(!zguess.is_null(), "Pointer zguess must not be null");
+    // Recover the solver object from the opaque pointer
+    let mut solver = unsafe { Box::from_raw(solver as *mut lib::DefaultSolver<T>) };
+
+    //build a DefaultVariables to hold the guess
+    let mut guess=DefaultVariables::<T>::new(solver.data.n,solver.data.n);
+
+    // Recover the arrays from C pointers and deduce their lengths from the matrix dimensions
+    //TODO this makes a copy of the guess, which happens again inside solve_warm
+    let primal = Vec::from_raw_parts(xguess as *mut T, solver.data.A.n, solver.data.A.n);
+    guess.x.copy_from(&primal);
+    forget(primal);
+    let slack=Vec::from_raw_parts(sguess as *mut T, solver.data.A.m, solver.data.A.m);
+    guess.s.copy_from(&slack);
+    forget(slack);
+    let zguess=Vec::from_raw_parts(zguess as *mut T, solver.data.A.m, solver.data.A.m);
+    guess.z.copy_from(&zguess);
+    forget(zguess);
+
+    // Use the recovered solver object
+    solver.solve_warm(&Some(&guess));
+
+    // Leave the solver object on the heap
+    Box::into_raw(solver);
+}
+
+#[no_mangle]
+pub extern "C" fn clarabel_DefaultSolver_f64_solve_warm(solver: *mut ClarabelDefaultSolver_f64,xguess:*const f64,sguess:*const f64,zguess:*const f64) {
+    unsafe{
+    _internal_DefaultSolver_solve_warm::<f64>(solver,xguess,sguess,zguess);
+    }
 }
 
 #[no_mangle]
