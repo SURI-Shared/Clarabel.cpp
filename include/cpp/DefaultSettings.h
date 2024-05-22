@@ -57,6 +57,7 @@ struct DefaultSettings
     bool presolve_enable;
 
     static DefaultSettings<T> default_settings();
+    static DefaultSettings<T> rerunnable_settings();
 };
 
 // Instantiate the templates
@@ -303,12 +304,19 @@ class DefaultSettingsBuilder
 extern "C" {
 DefaultSettings<double> clarabel_DefaultSettings_f64_default();
 DefaultSettings<float> clarabel_DefaultSettings_f32_default();
+DefaultSettings<double> clarabel_DefaultSettings_f64_rerunnable();
 }
 
 template<>
 inline DefaultSettings<double> DefaultSettings<double>::default_settings()
 {
     return clarabel_DefaultSettings_f64_default();
+}
+
+template<>
+inline DefaultSettings<double> DefaultSettings<double>::rerunnable_settings()
+{
+    return clarabel_DefaultSettings_f64_rerunnable();
 }
 
 template<>
