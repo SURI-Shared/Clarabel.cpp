@@ -124,7 +124,7 @@ unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xgue
     let mut solver = unsafe { Box::from_raw(solver as *mut lib::DefaultSolver<T>) };
 
     //build a DefaultVariables to hold the guess
-    let mut guess=DefaultVariables::<T>::new(solver.data.n,solver.data.n);
+    let mut guess=DefaultVariables::<T>::new(solver.data.n,solver.data.m);
 
     // Recover the arrays from C pointers and deduce their lengths from the matrix dimensions
     //TODO this makes a copy of the guess, which happens again inside solve_warm
