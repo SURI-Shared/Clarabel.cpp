@@ -41,6 +41,13 @@ class DefaultSolution
         T obj_val;
         T obj_val_dual;
         double solve_time;
+        double setup_time;
+        double equilibration_time;
+        double kktinit_time;
+        double initialization_time;
+        double ip_iteration_time;
+        double kkt_update_time;
+        double kkt_solve_time;
         uint32_t iterations;
         T r_prim;
         T r_dual;
@@ -51,6 +58,13 @@ class DefaultSolution
     T obj_val;
     T obj_val_dual;
     double solve_time;
+    double setup_time;
+    double equilibration_time;
+    double kktinit_time;
+    double initialization_time;
+    double ip_iteration_time;
+    double kkt_update_time;
+    double kkt_solve_time;
     uint32_t iterations;
     T r_prim;
     T r_dual;
@@ -63,7 +77,14 @@ class DefaultSolution
         status(solution.status), 
         obj_val(solution.obj_val),
         obj_val_dual(solution.obj_val_dual),
-        solve_time(solution.solve_time), 
+        solve_time(solution.solve_time),
+        setup_time(solution.setup_time),
+        equilibration_time(solution.equilibration_time),
+        kktinit_time(solution.kktinit_time),
+        initialization_time(solution.initialization_time),
+        ip_iteration_time(solution.ip_iteration_time),
+        kkt_update_time(solution.kkt_update_time),
+        kkt_solve_time(solution.kkt_solve_time),
         iterations(solution.iterations),
         r_prim(solution.r_prim), 
         r_dual(solution.r_dual)
