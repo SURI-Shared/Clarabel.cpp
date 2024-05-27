@@ -116,7 +116,7 @@ fn _internal_DefaultSolver_solve<T: FloatT>(solver: *mut c_void) {
 
 // Wrapper function to call DefaultSolver.solve_warm() from C
 #[allow(non_snake_case)]
-unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xguess:*const T,sguess:*const T,zguess:*const T) {
+unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xguess:*const T,sguess:*const T,zguess:*const T,mode:i32,lambda:f64) {
     debug_assert!(!xguess.is_null(), "Pointer xguess must not be null");
     debug_assert!(!sguess.is_null(), "Pointer sguess must not be null");
     debug_assert!(!zguess.is_null(), "Pointer zguess must not be null");
@@ -139,16 +139,16 @@ unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xgue
     forget(zguess);
 
     // Use the recovered solver object
-    solver.solve_warm(&Some(&guess));
+    solver.solve_warm(&Some(&guess),&Some(mode),&T::from(lambda));
 
     // Leave the solver object on the heap
     Box::into_raw(solver);
 }
 
 #[no_mangle]
-pub extern "C" fn clarabel_DefaultSolver_f64_solve_warm(solver: *mut ClarabelDefaultSolver_f64,xguess:*const f64,sguess:*const f64,zguess:*const f64) {
+pub extern "C" fn clarabel_DefaultSolver_f64_solve_warm(solver: *mut ClarabelDefaultSolver_f64,xguess:*const f64,sguess:*const f64,zguess:*const f64,mode:i32,lambda:f64) {
     unsafe{
-    _internal_DefaultSolver_solve_warm::<f64>(solver,xguess,sguess,zguess);
+    _internal_DefaultSolver_solve_warm::<f64>(solver,xguess,sguess,zguess,mode,lambda);
     }
 }
 
