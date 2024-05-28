@@ -27,10 +27,40 @@ pub struct DefaultSolution<T: FloatT> {
     pub iterations: u32,
     pub r_prim: T,
     pub r_dual: T,
+
+    // // old iterates
+    // pub xhist: *mut *mut T,
+    // pub zhist: *mut *mut T,
+    // pub shist: *mut *mut T,
+
 }
 
 impl<T: FloatT> DefaultSolution<T> {
     pub fn from(solution: &mut lib::DefaultSolution<T>) -> Self {
+        // let mut xptrs=Vec::with_capacity(solution.xhist.len());
+        // let mut zptrs=Vec::with_capacity(solution.zhist.len());
+        // let mut sptrs=Vec::with_capacity(solution.shist.len());
+        // for i in 0..solution.xhist.len(){
+        //     let entry=solution.xhist.get_mut(i);
+        //     match entry{
+        //         Some(e)=>{xptrs.push(e.as_mut_ptr())}
+        //         None=>{}
+        //     }
+        // }
+        // for i in 0..solution.zhist.len(){
+        //     let entry=solution.zhist.get_mut(i);
+        //     match entry{
+        //         Some(e)=>{zptrs.push(e.as_mut_ptr())}
+        //         None=>{}
+        //     }
+        // }
+        // for i in 0..solution.shist.len(){
+        //     let entry=solution.shist.get_mut(i);
+        //     match entry{
+        //         Some(e)=>{sptrs.push(e.as_mut_ptr())}
+        //         None=>{}
+        //     }
+        // }
         Self {
             x: solution.x.as_mut_ptr(),
             x_length: solution.x.len(),
@@ -52,6 +82,9 @@ impl<T: FloatT> DefaultSolution<T> {
             iterations: solution.iterations,
             r_prim: solution.r_prim,
             r_dual: solution.r_dual,
+            // xhist:xptrs.as_mut_ptr(),
+            // zhist: zptrs.as_mut_ptr(),
+            // shist: sptrs.as_mut_ptr()
         }
     }
 }

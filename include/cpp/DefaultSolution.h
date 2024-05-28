@@ -51,6 +51,10 @@ class DefaultSolution
         uint32_t iterations;
         T r_prim;
         T r_dual;
+
+        // T **xhist;
+        // T **zhist;
+        // T **shist;
     };
 
     Eigen::Map<Eigen::VectorX<T>> x, z, s;
@@ -68,6 +72,8 @@ class DefaultSolution
     uint32_t iterations;
     T r_prim;
     T r_dual;
+
+    // std::vector<Eigen::Map<Eigen::VectorX<T>>> xhist,zhist,shist;
 
     DefaultSolution(ClarabelDefaultSolution &solution)
         : 
@@ -88,7 +94,15 @@ class DefaultSolution
         iterations(solution.iterations),
         r_prim(solution.r_prim), 
         r_dual(solution.r_dual)
+        // xhist(iterations),
+        // zhist(iterations),
+        // shist(iterations)
     {
+        // for(size_t i=0;i<iterations;i++){
+        //     xhist.emplace_back(solution.xhist[i],solution.x_length);
+        //     zhist.emplace_back(solution.zhist[i],solution.z_length);
+        //     shist.emplace_back(solution.shist[i],solution.s_length);
+        // }
     }
     DefaultSolution():x(nullptr,0),z(nullptr,0),s(nullptr,0),status(SolverStatus::Unsolved),obj_val(0),obj_val_dual(0),solve_time(0),iterations(0),r_prim(0),r_dual(0){}//dangerous nullptr!
 };
