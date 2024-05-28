@@ -67,6 +67,8 @@ pub struct ClarabelDefaultSettings<T: FloatT> {
 
     // preprocessing
     pub presolve_enable: bool,
+
+    pub reduced_first_correction: bool,
 }
 
 /// Wrapper function for DefaultSettings::default()
@@ -121,6 +123,7 @@ fn _internal_DefaultSettings_default<T: FloatT>() -> ClarabelDefaultSettings<T> 
         iterative_refinement_max_iter: default.iterative_refinement_max_iter,
         iterative_refinement_stop_ratio: default.iterative_refinement_stop_ratio,
         presolve_enable: default.presolve_enable,
+        reduced_first_correction: default.reduced_first_correction,
     }
 }
 
@@ -188,6 +191,7 @@ fn _internal_DefaultSettings_rerunnable<T: FloatT>() -> ClarabelDefaultSettings<
         iterative_refinement_max_iter: default.iterative_refinement_max_iter,
         iterative_refinement_stop_ratio: default.iterative_refinement_stop_ratio,
         presolve_enable: default.presolve_enable,
+        reduced_first_correction: default.reduced_first_correction,
     }
 }
 
