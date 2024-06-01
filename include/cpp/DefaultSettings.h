@@ -56,6 +56,7 @@ struct DefaultSettings
     T iterative_refinement_stop_ratio;
     bool presolve_enable;
     bool reduced_first_correction;
+    bool save_iterates;
 
     static DefaultSettings<T> default_settings();
     static DefaultSettings<T> rerunnable_settings();
@@ -304,6 +305,12 @@ class DefaultSettingsBuilder
     DefaultSettingsBuilder<T> &reduced_first_correction(bool reduced_first_correction)
     {
         settings.reduced_first_correction = reduced_first_correction;
+        return *this;
+    }
+
+    DefaultSettingsBuilder<T> &save_iterates(bool save_iterates)
+    {
+        settings.save_iterates = save_iterates;
         return *this;
     }
 };

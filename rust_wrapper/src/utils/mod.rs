@@ -59,5 +59,6 @@ pub fn get_solver_settings_from_c<T: FloatT>(
         iterative_refinement_stop_ratio: value.iterative_refinement_stop_ratio,
         presolve_enable: value.presolve_enable,
         reduced_first_correction: value.reduced_first_correction,
+        save_iterates: value.save_iterates,
     }
 }
