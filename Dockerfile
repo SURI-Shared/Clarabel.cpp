@@ -7,11 +7,11 @@ WORKDIR /src
 RUN wget https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
 RUN tar xf /src/eigen-3.4.0.tar.gz
 WORKDIR /src/eigen-3.4.0/build
-RUN cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release
 RUN make install
 
 WORKDIR /src/Clarabel.cpp
 COPY . .
 WORKDIR /src/Clarabel.cpp/build
-RUN cmake /src/Clarabel.cpp
+RUN cmake /src/Clarabel.cpp -DCMAKE_BUILD_TYPE=Release
 RUN make
