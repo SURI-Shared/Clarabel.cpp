@@ -114,6 +114,19 @@ fn _internal_DefaultSolver_solve<T: FloatT>(solver: *mut c_void) {
     Box::into_raw(solver);
 }
 
+// Wrapper function to call DefaultSolver.clear_setup_timers() from C
+#[allow(non_snake_case)]
+fn _internal_DefaultSolver_clear_setup_timers<T: FloatT>(solver: *mut c_void) {
+    // Recover the solver object from the opaque pointer
+    let mut solver = unsafe { Box::from_raw(solver as *mut lib::DefaultSolver<T>) };
+
+    // Use the recovered solver object
+    solver.clear_setup_timers();
+
+    // Leave the solver object on the heap
+    Box::into_raw(solver);
+}
+
 // Wrapper function to call DefaultSolver.solve_warm() from C
 #[allow(non_snake_case)]
 unsafe fn _internal_DefaultSolver_solve_warm<T: FloatT>(solver: *mut c_void,xguess:*const T,sguess:*const T,zguess:*const T,mode:i32,lambda:f64) {
@@ -160,6 +173,16 @@ pub extern "C" fn clarabel_DefaultSolver_f64_solve(solver: *mut ClarabelDefaultS
 #[no_mangle]
 pub extern "C" fn clarabel_DefaultSolver_f32_solve(solver: *mut ClarabelDefaultSolver_f32) {
     _internal_DefaultSolver_solve::<f32>(solver);
+}
+
+#[no_mangle]
+pub extern "C" fn clarabel_DefaultSolver_f64_clear_setup_timers(solver: *mut ClarabelDefaultSolver_f64) {
+    _internal_DefaultSolver_clear_setup_timers::<f64>(solver);
+}
+
+#[no_mangle]
+pub extern "C" fn clarabel_DefaultSolver_f32_clear_setup_timers(solver: *mut ClarabelDefaultSolver_f32) {
+    _internal_DefaultSolver_clear_setup_timers::<f32>(solver);
 }
 
 // Function to free the memory of the solver object
