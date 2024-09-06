@@ -11,7 +11,12 @@ RUN cmake .. -DCMAKE_BUILD_TYPE=Release
 RUN make install
 
 WORKDIR /src/Clarabel.cpp
-COPY . .
+COPY Clarabel.rs Clarabel.rs
+COPY examples examples
+COPY include include
+COPY rust_wrapper rust_wrapper
+COPY tests tests
+COPY CMakeLists.txt CMakeLists.txt
 WORKDIR /src/Clarabel.cpp/build
 RUN cmake /src/Clarabel.cpp -DCMAKE_BUILD_TYPE=Release
 RUN make
